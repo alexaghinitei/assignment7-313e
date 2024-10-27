@@ -130,16 +130,20 @@ class LinkedList:
             self.head = new_term
             return
 
+        # go until the current.next is smaller than the exponent, meaning we are in right spot
         current = self.head
         while current.next is not None and current.next.exp > exp:
             current = current.next
 
-        if current.exp == exp:
-            current.coeff += coeff
-            if current.coeff == 0: 
+        # if the next term has same exponent, add them
+        if current.next is not None and current.next.exp == exp:
+            current.next.coeff += coeff
+            if current.next.coeff == 0: 
                 current.next = current.next.next # removes that node if the sum adds up to zero
+        # if a new exponent
         else:
-            new_term = Node(coeff, exp, current.next)
+            new_term = Node(coeff, exp)
+            new_term.next = current.next
             current.next = new_term
             
 
@@ -161,7 +165,7 @@ class LinkedList:
         
         
         
-        while current_1 is not None and current_2 is not None:
+        while current_1 is not None or current_2 is not None:
             if current_1 is None:
                 sum.insert_term(current_2.coeff, current_2.exp)
                 current_2 = current_2.next
