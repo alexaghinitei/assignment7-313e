@@ -112,34 +112,34 @@ class LinkedList:
     # If a term with that exponent already exists, add the coefficients together.
     # You must keep the terms in descending order by exponent.
     def insert_term(self, coeff, exp):
+        
         if coeff == 0:
-            return
+            return 
+
+        new_term = Node(coeff, exp)
         
-        new_term = Node(coeff,exp)
-        # if empty poly
+        # if empty
         if self.head is None:
-            new_term.next = None
             self.head = new_term
+            self.head.next = None
             return
         
-        # ensure the first term is the highest exp
+        # if its bigger than head exp
         if exp > self.head.exp:
             new_term.next = self.head
             self.head = new_term
             return
-        # if not loop through and add the term where belongs or add coeff to alr existing node
-        
+
         current = self.head
-        
-        # go until the current.next exp is no longer greater than the insert exp so it goes right place :)
         while current.next is not None and current.next.exp > exp:
             current = current.next
-        
+
         if current.exp == exp:
             current.coeff += coeff
+            if current.coeff == 0: 
+                self.head = current.next
         else:
-            # pointer to next term, and set pointer to new term
-            new_term.next = current.next
+            new_term = Node(coeff, exp, current.next)
             current.next = new_term
             
 
