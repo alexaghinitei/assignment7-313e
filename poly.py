@@ -137,7 +137,7 @@ class LinkedList:
         if current.exp == exp:
             current.coeff += coeff
             if current.coeff == 0: 
-                self.head = current.next
+                current.next = current.next.next # removes that node if the sum adds up to zero
         else:
             new_term = Node(coeff, exp, current.next)
             current.next = new_term
